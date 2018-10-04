@@ -1,30 +1,30 @@
 <?php
-require_once("db.php");git 
+require("koneksi.php");
 ?>
-<table border=1>
-    <thead>
-        <th>Nama</th>
+<form method="post">
+    <table border="1">
+        <th>No</th>
         <th>Nim</th>
+        <th>Nama</th>
+        <th>Kelas</th>
         <th>Tanggal Lahir</th>
-    </thead>
-    <tbody>
-<?php
-$sql    = "SELECT * FROM siswa";
-$result = mysqli_query($conn, $sql);
-
-if (mysqli_num_rows($result) > 0) {
-    // output data of each row
-    while($row = mysqli_fetch_assoc($result)) {
-        echo "<tr>";
-        echo "<td>" . $row["nama"]. "</td>"; 
-        echo "<td>" . $row["nim"]. "</td>";
-        echo "<td>" . $row["tgl_lahir"]. "</td>";
-        echo "</tr>";
+        <?php
+        $no=1;
+        $query = $pdo -> prepare("SELECT * FROM mahasiswa");
+        $query -> execute();
+        while($data =$query -> fetch(PDO :: FETCH_ASSOC)){
+    ?>
+    <tr>
+        <td><?php echo $no;?></td>
+            <td><?php echo $data['nim'];?></td>
+            <td><?php echo $data['nama'];?></td>
+            <td><?php echo $data['kelas'];?></td>
+            <td><?php echo $data['tgl_lahir'];?></td>
+            <td><a href="delet.php?id=<?php echo $data['id']?>">Hapus</a> | <a href="formupdate.php?id=<?php echo $data['id']?>">Update</a></td>
+    </tr>
+    <?php
+         $no++;
     }
-} else {
-    echo "0 results";
-}
-mysqli_close($conn);
-?> 
-    </tbody>
-</table>
+     ?>        
+    </table>
+</form>
