@@ -1,13 +1,13 @@
 <?php
-$servername = "localhost";
-$username   = "admin";
-$password   = "1234";
-$db         = "WebDasar";
-
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $db);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+  	$host = "localhost";
+	$user = "root";
+	$pass = "";
+	$db = "db";
+	try {
+		$pdo = new PDO("mysql:host={$host}; dbname={$db};", $user, $pass);
+		$pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	} catch (PDOException $e) {
+		print "Koneksi atau query bermasalah : " . $e -> getMessage() . "<br>";
+		die();
+	}
 ?>
