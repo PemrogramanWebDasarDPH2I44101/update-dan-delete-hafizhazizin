@@ -1,20 +1,20 @@
 <?php
-require_once("db.php");
+require("koneksi.php");
+?>
+ 
+<?php
+    if (isset($_POST['nim'])) {
+        $nim =$_POST['nim'];
+        $nama =$_POST['nama'];
+        $kelas =$_POST['kelas'];
+        $tgl =$_POST['tgl'];
 
-$nama       = $_POST['nama'];
-$nim        = $_POST['nim'];
-$tgl_lahir  = $_POST['tgl_lahir'];
-
-$sql = "INSERT INTO siswa(nama, nim, tgl_lahir) 
-        VALUES ('$nama','$nim','$tgl_lahir')";
-
-
-if (mysqli_query($conn, $sql)) {
-    echo "New record created successfully<br>";
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+$query =$pdo ->prepare("INSERT INTO mahasiswa(nim,nama,kelas,tgl_lahir) VALUES ('$nim','$nama','$kelas','$tgl')");
+$query -> execute();
+    if($query)
+    header("location:view.php");
+    else{
+        die("Tambah Data Gagal");  
+    }
 }
-
-mysqli_close($conn);
-echo "silahkan klik <a href='list.php'>link</a> untuk ke halaman list";
-?> 
+?>
